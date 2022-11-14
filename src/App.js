@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import RecipeCard from './components/RecipeCard';
+import AddRecipeForm from './components/AddRecipeForm'
+import { useState } from 'react';
 
 function App() {
+
+  const [recipes, setRecipes] = useState([])
+
+
+  function addRecipe(author, title, text) {
+    const newRecipe = {author: author, title: title, text: text}
+    setRecipes([...recipes, newRecipe])
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className='centre-container'>
+
+        <div>
+          <h1>Recipes for you</h1>
+        </div>
+
+        <AddRecipeForm addRecipe={addRecipe}/>
+
+        <div className='feed'>
+          {recipes.map((recipe) => <RecipeCard title={recipe.title} text = {recipe.text} author={recipe.author}/>)}
+        </div>
+
+      </div>
+
     </div>
   );
 }
